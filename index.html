@@ -1,0 +1,154 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack-a-Mole Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .mole {
+            background-image: url('https://placehold.co/100x100?text=Mole');
+            background-size: cover;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            cursor: pointer;
+        }
+        .hole {
+            position: relative;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            top: 45px;
+            left: 45px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="text-center">
+        <h1 class="text-3xl font-bold mb-4 text-blue-600">Whack-a-Mole Game</h1>
+        <div class="grid grid-cols-3 gap-4 mb-4" style="width: 300px; height: 300px; position: relative;">
+            <div class="hole bg-green-300" style="width: 100px; height: 100px;">
+                <div class="dot"></div>
+            </div>
+            <div class="hole bg-green-300" style="width: 100px; height: 100px;">
+                <div class="dot"></div>
+            </div>
+            <div class="hole bg-green-300" style="width: 100px; height: 100px;">
+                <div class="dot"></div>
+            </div>
+            <div class="hole bg-green-300" style="width: 100px; height: 100px;">
+                <div class="dot"></div>
+            </div>
+            <div class="hole bg-green-300" style="width: 100px; height: 100px;">
+                <div class="dot"></div>
+            </div>
+            <div class="hole bg-green-300" style="width: 100px; height: 100px;">
+                <div class="dot"></div>
+            </div>
+            <div class="hole bg-green-300" style="width: 100px; height: 100px;">
+                <div class="dot"></div>
+            </div>
+            <div class="hole bg-green-300" style="width: 100px; height: 100px;">
+                <div class="dot"></div>
+            </div>
+            <div class="hole bg-green-300" style="width: 100px; height: 100px;">
+                <div class="dot"></div>
+            </div>
+        </div>
+        <div class="mb-4">
+            <span class="text-xl">Score: </span><span id="score" class="text-xl font-bold">0</span>
+        </div>
+        <div class="mb-4">
+            <span class="text-xl">Time: </span><span id="time" class="text-xl font-bold">10</span> seconds
+        </div>
+        <button id="startButton" class="bg-blue-500 text-white py-2 px-4 rounded mb-4">Start Game</button>
+        <div class="text-left bg-white p-4 rounded shadow-md">
+            <h2 class="text-2xl font-bold mb-2">Rules</h2>
+            <ul class="list-disc list-inside">
+                <li>Click on the moles as they appear.</li>
+                <li>Each mole clicked adds 1 point to your score.</li>
+                <li>The game lasts for 10 seconds.</li>
+                <li>Try to get the highest score possible!</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const holes = document.querySelectorAll('.hole');
+        const scoreBoard = document.getElementById('score');
+        const timeBoard = document.getElementById('time');
+        const startButton = document.getElementById('startButton');
+        let lastHole;
+        let timeUp = false;
+        let score = 0;
+        let time = 10;
+        let countdown;
+
+        function randomTime(min, max) {
+            return Math.round(Math.random() * (max - min) + min);
+        }
+
+        function randomHole(holes) {
+            const idx = Math.floor(Math.random() * holes.length);
+            const hole = holes[idx];
+            if (hole === lastHole) {
+                return randomHole(holes);
+            }
+            lastHole = hole;
+            return hole;
+        }
+
+        function peep() {
+            const time = randomTime(200, 1000);
+            const hole = randomHole(holes);
+            const mole = document.createElement('div');
+            mole.classList.add('mole');
+            hole.appendChild(mole);
+            setTimeout(() => {
+                hole.removeChild(mole);
+                if (!timeUp) peep();
+            }, time);
+        }
+
+        function startGame() {
+            scoreBoard.textContent = 0;
+            timeBoard.textContent = 10;
+            timeUp = false;
+            score = 0;
+            time = 10;
+            peep();
+            countdown = setInterval(() => {
+                time--;
+                timeBoard.textContent = time;
+                if (time <= 0) {
+                    clearInterval(countdown);
+                    timeUp = true;
+                }
+            }, 1000);
+        }
+
+        function whack(e) {
+            if (!e.isTrusted) return; // cheater!
+            score++;
+            this.parentNode.removeChild(this);
+            scoreBoard.textContent = score;
+        }
+
+        startButton.addEventListener('click', startGame);
+        document.body.addEventListener('click', function(e) {
+            if (e.target.classList.contains('mole')) {
+                whack.call(e.target, e);
+            }
+        });
+    </script>
+</body>
+</html>
