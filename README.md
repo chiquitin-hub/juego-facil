@@ -1,9 +1,9 @@
-Juego de golpear al topo
-¡Bienvenido un juego de Whack-a-Mole ! 🐹🎮
+Juego de golpear al topo.
+¡Bienvenido un juego de Whack-a-Mole ! 🐹🎮.
 Un juego clásico de golpear topos, desarrollado con HTML, CSS (TailwindCSS) y JavaScript puro .
 
 
-🚀 Funcionalidades
+🚀 Funcionalidades.
   🎯 Golpea los topos que aparecen aleatoriamente en diferentes agujeros.
   🕒 El juego dura 10 segundos.
   🏁 Cada topo golpeado suma 1 punto a tu marcador.
