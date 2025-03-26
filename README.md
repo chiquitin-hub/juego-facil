@@ -6,7 +6,7 @@ Un juego clásico de golpear topos, desarrollado con HTML, CSS (TailwindCSS) y J
 🚀 Funcionalidades.
   🎯 Golpea los topos que aparecen aleatoriamente en diferentes agujeros.
   🕒 El juego dura 10 segundos.
-  🏁 Cada topo golpeado suma 1 punto a tu marcador.
+  🏁 Cada topo golpeado suma 1 punto a tu marcador. 
   🏆 ¡Intenta obtener la puntuación más alta!
   
 🎮 ¿Cómo jugar?
